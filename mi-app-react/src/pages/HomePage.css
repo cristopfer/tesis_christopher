@@ -1,0 +1,12 @@
+/* src/pages/HomePage.css */
+.title-main {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
