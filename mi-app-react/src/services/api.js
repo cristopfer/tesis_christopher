@@ -1,9 +1,11 @@
 // src/services/api.js
 import axios from 'axios';
 
+const API_URL = 'https://eysen001-tesis-christopher.hf.space';
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000/api',
-  timeout: 120000, // 60 segundos para procesamiento
+  baseURL: API_URL,
+  timeout: 120000,
 });
 
 export const datasetService = {
@@ -11,39 +13,36 @@ export const datasetService = {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await api.post('/upload', formData, {
+    const response = await api.post('/api/upload', formData, {  // ← /api/upload
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
   },
 
-  // NUEVO: Procesar dataset
   processDataset: async () => {
-    const response = await api.post('/process');
+    const response = await api.post('/api/process');  // ← /api/process
     return response.data;
   },
 
-  // NUEVO: Limpiar dataset
   clearDataset: async () => {
-    const response = await api.post('/clear-dataset');
+    const response = await api.post('/api/clear-dataset');  // ← /api/clear-dataset
     return response.data;
   },
 };
 
-// NUEVO: Servicio para predicciones
 export const predictionService = {
   predictModulo1: async () => {
-    const response = await api.post('/predict/modulo1');
+    const response = await api.post('/api/predict/modulo1');  // ← /api/predict/...
     return response.data;
   },
 
   predictModulo2: async () => {
-    const response = await api.post('/predict/modulo2');
+    const response = await api.post('/api/predict/modulo2');  // ← /api/predict/...
     return response.data;
   },
 
   predictModulo3: async () => {
-    const response = await api.post('/predict/modulo3');
+    const response = await api.post('/api/predict/modulo3');  // ← /api/predict/...
     return response.data;
   },
 };
