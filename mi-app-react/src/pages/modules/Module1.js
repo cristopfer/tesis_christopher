@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { predictionService } from '../../services/api';
+import { PieChart } from '../../components/ui/PieChart';
 
 export const Module1 = () => {
   const [resultado, setResultado] = useState(null);
@@ -85,30 +86,36 @@ export const Module1 = () => {
           {/* Resultado del modelo activo */}
           {modeloActivo && (
             <div style={{ padding: '15px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-              <p style={{ fontWeight: 'bold', marginTop: 0 }}>{modeloActivo.nombre_modelo}</p>
+              <p style={{ fontWeight: 'bold', marginTop: 0, marginBottom: '15px' }}>{modeloActivo.nombre_modelo}</p>
               
-              <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                <div style={{ flex: 1, minWidth: '120px', textAlign: 'center', padding: '10px', background: '#dcfce7', borderRadius: '8px' }}>
-                  <p style={{ fontSize: '0.9em', margin: 0 }}>🏆 Victoria {metadata.jugador_a}</p>
-                  <p style={{ fontSize: '1.5em', fontWeight: 'bold', margin: '5px 0', color: '#16a34a' }}>
-                    {modeloActivo.prediccion.prob_victoria}%
+              <PieChart 
+                data={[
+                  modeloActivo.prediccion.prob_victoria,
+                  modeloActivo.prediccion.prob_tablas,
+                  modeloActivo.prediccion.prob_derrota,
+                ]}
+                labels={[
+                  `🏆 Victoria ${metadata.jugador_a}`,
+                  '🤝 Tablas',
+                  `❌ Victoria ${metadata.jugador_b}`,
+                ]}
+                colors={['#16a34a', '#d97706', '#dc2626']}
+              />
+
+              {modeloActivo.veredicto && (
+                <div style={{ 
+                  marginTop: '15px', 
+                  padding: '10px', 
+                  background: modeloActivo.veredicto.includes(metadata.jugador_a) ? '#dcfce7' : 
+                              modeloActivo.veredicto.includes('TABLAS') ? '#fef3c7' : '#fee2e2',
+                  borderRadius: '8px',
+                  textAlign: 'center'
+                }}>
+                  <p style={{ fontWeight: 'bold', margin: 0, fontSize: '1.1em' }}>
+                    🏆 {modeloActivo.veredicto}
                   </p>
                 </div>
-                
-                <div style={{ flex: 1, minWidth: '120px', textAlign: 'center', padding: '10px', background: '#fef3c7', borderRadius: '8px' }}>
-                  <p style={{ fontSize: '0.9em', margin: 0 }}>🤝 Tablas</p>
-                  <p style={{ fontSize: '1.5em', fontWeight: 'bold', margin: '5px 0', color: '#d97706' }}>
-                    {modeloActivo.prediccion.prob_tablas}%
-                  </p>
-                </div>
-                
-                <div style={{ flex: 1, minWidth: '120px', textAlign: 'center', padding: '10px', background: '#fee2e2', borderRadius: '8px' }}>
-                  <p style={{ fontSize: '0.9em', margin: 0 }}>❌ Victoria {metadata.jugador_b}</p>
-                  <p style={{ fontSize: '1.5em', fontWeight: 'bold', margin: '5px 0', color: '#dc2626' }}>
-                    {modeloActivo.prediccion.prob_derrota}%
-                  </p>
-                </div>
-              </div>
+              )}
             </div>
           )}
         </div>
