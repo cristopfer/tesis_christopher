@@ -97,14 +97,14 @@ export const Module1 = () => {
                 labels={
                   activeTab === 'b' 
                     ? [
-                        `❌ Victoria ${metadata.jugador_a}`,
+                        `🏆 Victoria ${metadata.jugador_a}`,
                         '🤝 Tablas',
                         `🏆 Victoria ${metadata.jugador_b}`,
                       ]
                     : [
                         `🏆 Victoria ${metadata.jugador_a}`,
                         '🤝 Tablas',
-                        `❌ Victoria ${metadata.jugador_b}`,
+                        `🏆 Victoria ${metadata.jugador_b}`,
                       ]
                 }
                 colors={

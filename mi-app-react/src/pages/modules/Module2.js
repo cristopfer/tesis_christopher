@@ -115,12 +115,24 @@ export const Module2 = () => {
                   modeloActivo.prediccion.prob_tablas,
                   modeloActivo.prediccion.prob_derrota,
                 ]}
-                labels={[
-                  `🏆 Victoria ${metadata.jugador_a}`,
-                  '🤝 Tablas',
-                  `❌ Victoria ${metadata.jugador_b}`,
-                ]}
-                colors={['#16a34a', '#d97706', '#dc2626']}
+                labels={
+                  activeTab === 'b' 
+                    ? [
+                        `🏆 Victoria ${metadata.jugador_a}`,
+                        '🤝 Tablas',
+                        `🏆 Victoria ${metadata.jugador_b}`,
+                      ]
+                    : [
+                        `🏆 Victoria ${metadata.jugador_a}`,
+                        '🤝 Tablas',
+                        `🏆 Victoria ${metadata.jugador_b}`,
+                      ]
+                }
+                colors={
+                  activeTab === 'b'
+                    ? ['#dc2626', '#d97706', '#16a34a']
+                    : ['#16a34a', '#d97706', '#dc2626']
+                }
               />
 
               {modeloActivo.veredicto && (
